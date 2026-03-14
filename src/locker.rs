@@ -411,8 +411,17 @@ impl App {
                     .width(Length::Fixed(240.0))
             };
 
+            let layout_button = if !self.common.active_layouts.is_empty() {
+                iced::widget::row![
+                    widget::icon::from_name("input-keyboard-symbolic"),
+                    widget::text(self.common.active_layouts[0].layout.to_string()),
+                ]
+            } else {
+                iced::widget::row![widget::icon::from_name("input-keyboard-symbolic")]
+            };
+
             let mut input_button = widget::popover(
-                widget::button::custom(widget::icon::from_name("input-keyboard-symbolic"))
+                widget::button::custom(layout_button)
                     .padding(12.0)
                     .on_press(Message::DropdownToggle(Dropdown::Keyboard)),
             )
