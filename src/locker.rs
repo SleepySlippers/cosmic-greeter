@@ -559,7 +559,15 @@ impl App {
                             text_input = text_input.password()
                         }
 
-                        column = column.push(text_input);
+                        let mut input_row = iced::widget::row![text_input];
+
+                        if !self.common.active_layouts.is_empty() {
+                            input_row = input_row.push(widget::text(
+                                self.common.active_layouts[0].layout.to_string(),
+                            ));
+                        };
+
+                        column = column.push(input_row);
 
                         if self.common.caps_lock && !self.authenticating {
                             column = column.push(widget::text(fl!("caps-lock")));
